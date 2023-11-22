@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список пользователей</title>
+  <!-- подключения локального bootstrap -->
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid text-center">
+  <h1>Пользователь [[${profile.name}]]</h1>
+  <div class="row g-2 text-center">
+    <div class="col-6">
+      <div class="p-3 border bg-light">[[${profile.name}]]</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">[[${profile.email}]]</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">[[${profile.rate}]]</div>
+    </div>
+    <div class="col-6">
+      <div class="p-3 border bg-light">[[${profile.wallet}]]&#8381</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">[[${profile.registrationDate}]]</div>
+    </div>
+    <a th:href="@{/user-profile}">Вернуться к списку пользователей</a>
+  </div>
+
+
+
+</div>
+</body>
+</html>
