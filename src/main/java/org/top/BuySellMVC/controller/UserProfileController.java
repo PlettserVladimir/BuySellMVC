@@ -61,7 +61,7 @@ public class UserProfileController {
     public String getAddForm(Model model){
         UserProfile userProfile = new UserProfile();
         model.addAttribute("profile",userProfile);
-        return "profile/add-form-user-profile";
+        return "profile/form-reg-user";
     }
 
     @PostMapping("add")
@@ -72,7 +72,7 @@ public class UserProfileController {
         }else {
             redirectAttributes.addFlashAttribute(errorMessage,"Пользователь "+userProfile.getName()+" не создан");
         }
-        return "redirect:/user-profile";
+        return "redirect:/user-profile/add";
     }
 
 
