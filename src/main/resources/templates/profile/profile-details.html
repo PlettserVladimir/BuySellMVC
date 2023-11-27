@@ -25,7 +25,17 @@
     <div class="col">
       <div class="p-3 border bg-light">[[${profile.registrationDate}]]</div>
     </div>
-    <a th:href="@{/user-profile}">Вернуться к списку пользователей</a>
+    <div class="col-12"></div>
+    <div class="col-6">
+      <div class="p-3">
+        <a th:href="@{/user-profile}" class="btn btn-success">Вернуться к списку пользователей</a>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="p-3">
+        <a th:href="@{'/user-profile/delete/'+${profile.id}}" class="btn btn-danger">Удалить</a>
+      </div>
+    </div>
   </div>
 
 

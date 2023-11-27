@@ -9,9 +9,11 @@
 <body>
 <div class="container-fluid text-center">
     <h1>Список пользователей</h1>
+    <p class="alert alert-success" th:if="${successMessage !=null}">[[${successMessage}]]</p>
+    <p class="alert alert-danger" th:if="${errorMessage !=null}">[[${dangerMessage}]]</p>
     <table class="table table-bordered table-striped" >
     <!-- шапка таблицы -->
-        <thead class="table-dark">
+        <thead class="table-success">
             <tr>
                 <th>ИД</th>
                 <th>Имя пользователя</th>
