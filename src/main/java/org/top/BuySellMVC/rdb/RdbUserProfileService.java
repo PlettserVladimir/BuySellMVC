@@ -49,7 +49,6 @@ public class RdbUserProfileService implements UserProfileService {
         return updated;
     }
 
-    //TODO:выбросить исключение если профиль с таким именем уже существует
     @Override
     public Optional<UserProfile> addUserProfile(UserProfile profile) {
         Optional<UserProfile> added = findByName(profile.getName());

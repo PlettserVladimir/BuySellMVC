@@ -2,10 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Главная страница</title>
+    <title>Buy-Sell</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
-<h3>Сервер запущен</h3>
-<a th:href="@{/user-profile/add}">Добавить пользователя</a>
+<h3 class="text-center">Добро пожаловать в приложение Buy/Sell</h3>
+<a class="btn-info" th:href="@{/user-profile/add}">Добавить пользователя</a>
+<br>
+<a class="btn-info" th:href="@{/user-profile}">Список профилей</a>
 </body>
 </html>

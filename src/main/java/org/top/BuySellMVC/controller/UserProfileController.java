@@ -61,7 +61,7 @@ public class UserProfileController {
     public String getAddForm(Model model){
         UserProfile userProfile = new UserProfile();
         model.addAttribute("profile",userProfile);
-        return "profile/form-reg-user";
+        return "profile/form-reg-profile";
     }
 
     @PostMapping("add")
@@ -75,5 +75,29 @@ public class UserProfileController {
         return "redirect:/user-profile/add";
     }
 
+
+    //Редактирование профиль
+
+    @GetMapping("/update/{id}")
+    public String getUpdateForm(@PathVariable Integer id,Model model, RedirectAttributes redirectAttributes){
+        Optional<UserProfile> updated = userProfileService.findById(id);
+        if (updated.isPresent()){
+            model.addAttribute("profile", updated.get());
+            return "profile/update-profile-form";
+        }else {
+            redirectAttributes.addFlashAttribute(errorMessage,"Пользователь не найден");
+            return "redirect:/user-profile";
+        }
+    }
+    @PostMapping("/update")
+    public String postUpdateForm(UserProfile userProfile,RedirectAttributes redirectAttributes){
+        Optional<UserProfile> updated = userProfileService.updateUserProfile(userProfile);
+        if (updated.isPresent()){
+            redirectAttributes.addFlashAttribute(successMessage,"Успешно сохранено");
+        }else {
+            redirectAttributes.addFlashAttribute(errorMessage,"Изменения не сохранены");
+        }
+        return "redirect:/user-profile";
+    }
 
 }

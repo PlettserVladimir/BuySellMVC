@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование профиля</title>
+   <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<!-- верстка с использованием bootstrap -->
+<div class="container-fluid text-center">
+  <h1>Редактирование профиля</h1>
+
+  <div class="container-sm align-content-center text-center">
+    <form method="post" th:action="@{/user-profile/update}" th:object="${profile}">
+      <!-- id -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label" for="id">ID: </label>
+        <div class="col-sm-10">
+          <input class="form-control" type="number" id="id" th:field="*{id}" readonly/>
+        </div>
+      </div>
+
+      <!-- Наименование профиля -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label" for="name">Имя профиля: </label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" id="name" required minlength="1" th:field="*{name}"/>
+        </div>
+      </div>
+
+      <!--E-amil Адрес -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label" for="email">E-mail адрес: </label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" id="email" required minlength="1" th:field="*{email}"/>
+        </div>
+      </div>
+
+      <!-- Рейтинг -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label" for="rate">Рейтинг: </label>
+        <div class="col-sm-10">
+          <input class="form-control" type="number" id="rate" required min="0" max="5" step="1"
+                 th:field="*{rate}"/>
+        </div>
+      </div>
+
+      <!-- Дата регистрации -->
+      <div class="mb-3 row">
+        <label class="col-sm-2 col-form-label" for="date">Дата регистрации: </label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" id="date" th:field="*{registrationDate}" disabled/>
+        </div>
+      </div>
+
+      <!-- Рейтинг (пример со скрытым полем) -->
+      <input class="form-control" type="number" id="wallet" th:field="*{wallet}" hidden/>
+
+      <!-- кнопка отправки формы -->
+      <div class="mb-3 row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-5">
+          <button class="btn btn-success form-control">Сохранить</button>
+        </div>
+        <div class="col-sm-5">
+          <a class="btn btn-danger form-control" th:href="@{/user-profile}">Отменить</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
