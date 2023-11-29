@@ -54,7 +54,8 @@ public class RdbUserProfileService implements UserProfileService {
         Optional<UserProfile> added = findByName(profile.getName());
         if (added.isEmpty()){
             added = Optional.of(repository.save(profile));
+            return added;
         }
-        return added;
+        return Optional.empty();
     }
 }
