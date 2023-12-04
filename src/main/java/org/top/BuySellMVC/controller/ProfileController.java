@@ -7,34 +7,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.top.BuySellMVC.entity.UserProfile;
-import org.top.BuySellMVC.service.UserProfileService;
+import org.top.BuySellMVC.entity.Profile;
+import org.top.BuySellMVC.service.ProfileService;
 
 import java.util.Optional;
 
 @Controller
 @RequestMapping("user-profile")
-public class UserProfileController {
+public class ProfileController {
 
-    private final UserProfileService userProfileService;
+    private final ProfileService profileService;
     private final String successMessage = "successMessage";
     private final String errorMessage = "errorMessage";
 
 
-    public UserProfileController(UserProfileService userProfileService){
-        this.userProfileService = userProfileService;
+    public ProfileController(ProfileService profileService){
+        this.profileService = profileService;
     }
     //получить все записи
     @GetMapping("")
     public String getAll(Model model){
-        Iterable<UserProfile> profiles = userProfileService.findAll();
+        Iterable<Profile> profiles = profileService.findAll();
         model.addAttribute("profiles",profiles);
         return "profile/profile-list";
     }
     //Показать детали записи
     @GetMapping("/{id}")
     public String getId(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes){
-        Optional<UserProfile> profile = userProfileService.findById(id);
+        Optional<Profile> profile = profileService.findById(id);
         if (profile.isPresent()){
             model.addAttribute("profile",profile.get());
             return "profile/profile-details";
@@ -46,7 +46,7 @@ public class UserProfileController {
     //Удалить запись
     @GetMapping("/delete/{id}")
     public String deleteById(@PathVariable Integer id,RedirectAttributes redirectAttributes){
-        Optional<UserProfile> deleted = userProfileService.deleteUserProfile(id);
+        Optional<Profile> deleted = profileService.deleteProfile(id);
         if (deleted.isPresent()){
             redirectAttributes.addFlashAttribute(successMessage,
                     "Пользователь "+deleted.get().getName()+" успешно удален");
@@ -59,18 +59,18 @@ public class UserProfileController {
     //Добавить запись
     @GetMapping("add")
     public String getAddForm(Model model){
-        UserProfile userProfile = new UserProfile();
-        model.addAttribute("profile",userProfile);
+        Profile profile = new Profile();
+        model.addAttribute("profile", profile);
         return "profile/form-reg-profile";
     }
 
     @PostMapping("add")
-    public String postAddForm(UserProfile userProfile,RedirectAttributes redirectAttributes){
-        Optional<UserProfile> saved = userProfileService.addUserProfile(userProfile);
+    public String postAddForm(Profile profile, RedirectAttributes redirectAttributes){
+        Optional<Profile> saved = profileService.addProfile(profile);
         if (saved.isPresent()){
-            redirectAttributes.addFlashAttribute(successMessage,"Пользователь "+userProfile.getName()+" создан");
+            redirectAttributes.addFlashAttribute(successMessage,"Пользователь "+ profile.getName()+" создан");
         }else {
-            redirectAttributes.addFlashAttribute(errorMessage,"Пользователь "+userProfile.getName()+" не создан");
+            redirectAttributes.addFlashAttribute(errorMessage,"Пользователь "+ profile.getName()+" не создан");
         }
         return "redirect:/user-profile/add";
     }
@@ -80,7 +80,7 @@ public class UserProfileController {
 
     @GetMapping("/update/{id}")
     public String getUpdateForm(@PathVariable Integer id,Model model, RedirectAttributes redirectAttributes){
-        Optional<UserProfile> updated = userProfileService.findById(id);
+        Optional<Profile> updated = profileService.findById(id);
         if (updated.isPresent()){
             model.addAttribute("profile", updated.get());
             return "profile/update-profile-form";
@@ -90,8 +90,8 @@ public class UserProfileController {
         }
     }
     @PostMapping("/update")
-    public String postUpdateForm(UserProfile userProfile,RedirectAttributes redirectAttributes){
-        Optional<UserProfile> updated = userProfileService.updateUserProfile(userProfile);
+    public String postUpdateForm(Profile profile, RedirectAttributes redirectAttributes){
+        Optional<Profile> updated = profileService.updateProfile(profile);
         if (updated.isPresent()){
             redirectAttributes.addFlashAttribute(successMessage,"Успешно сохранено");
         }else {

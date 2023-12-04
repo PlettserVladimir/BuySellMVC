@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список товаров</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6" th:each="product:${products}">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">[[${product.name}}]]</h5>
+                    <p class="card-text">[[${product.description}]]</p>
+                    <p class="card-text">[[${product.price}]]</p>
+                    <p class="card-text">[[${product.profile.name}]]</p>
+                    <a href="#" class="btn btn-primary">Купить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

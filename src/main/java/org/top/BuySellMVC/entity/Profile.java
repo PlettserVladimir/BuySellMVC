@@ -3,10 +3,11 @@ package org.top.BuySellMVC.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-@Table(name="user_profile_t")
-public class UserProfile {
+@Table(name="profile_t")
+public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,7 +27,10 @@ public class UserProfile {
     @Column(name = "wallet_t",nullable = false)
     private Double wallet;
 
-    public UserProfile(){
+    @OneToMany(mappedBy = "profile")
+    private Set<Product> productSet;
+
+    public Profile(){
         id = 0;
         name = "";
         email = "";
@@ -34,6 +38,14 @@ public class UserProfile {
         rate = 0.0;
         wallet = 0.00;
 
+    }
+
+    public Set<Product> getProductSet() {
+        return productSet;
+    }
+
+    public void setProductSet(Set<Product> productSet) {
+        this.productSet = productSet;
     }
 
     public String getEmail() {
