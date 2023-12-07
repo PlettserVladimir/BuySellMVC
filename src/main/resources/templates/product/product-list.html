@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Список товаров</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-</head>
+<head th:insert="fragments/fragments.html :: page-head"></head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-6" th:each="product:${products}">
+        <div class="col" th:insert="fragments/fragments.html :: page-nav(page='profile')"></div>
+        <div class="col" th:each="product:${products}">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">[[${product.name}}]]</h5>

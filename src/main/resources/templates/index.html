@@ -6,9 +6,8 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
+
 <h3 class="text-center">Добро пожаловать в приложение Buy/Sell</h3>
-<a class="btn-info" th:href="@{/user-profile/add}">Добавить пользователя</a>
-<br>
-<a class="btn-info" th:href="@{/user-profile}">Список профилей</a>
+<th:block th:replace="fragments/fragments.html :: page-nav"></th:block>
 </body>
 </html>

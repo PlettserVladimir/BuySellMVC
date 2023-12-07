@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- данные файл содержит фрагменты, описывающие компоненты верстки страницы (header, footer, e.t.c.) -->
+<!-- фрагмент общего содержимого тега head -->
+<th:block th:fragment="page-head">
+    <meta charset="UTF-8">
+    <title>Hotels Catalog</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</th:block>
+
+<!-- фрагмент вывода сообщений dangerMessage/successMessage -->
+<th:block th:fragment="page-message">
+    <!-- вывод сообщения success message -->
+    <p class="alert alert-success" th:if="${successMessage != null}">
+        [[${successMessage}]]
+    </p>
+
+    <!-- вывод сообщения danger message -->
+    <p class="alert alert-danger" th:if="${dangerMessage != null}">
+        [[${dangerMessage}]]
+    </p>
+</th:block>
+
+<!-- компонент шапки приложения -->
+<th:block th:fragment="page-nav">
+    <div class="container-fluid align-items-start">
+        <div class="list-group" style="min-height: 100vh">
+            <a class="list-group-item list-group-item-action" th:classappend="${page == 'add'? 'active' : ''}" th:href="@{/user-profile/add}" >
+                Добавить пользователя
+            </a>
+            <a class="list-group-item list-group-item-action" th:href="@{/user-profile}" th:classappend="${page == 'profile'? 'active' : ''}">Список профилей</a>
+            <a href="#" class="list-group-item list-group-item-action">A third link item</a>
+            <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
+            <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
+        </div>
+    </div>
+</th:block>
+
+
+</body>
+</html>
