@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/fragments.html :: page-head}"></head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='productAdd')}"></div>
+        <div class="col-10">
+            <form method="post" th:action="@{/product/add}" th:object="${product}">
+                <h1>Добавить товар</h1>
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="card w-25" style="border-radius: 15px; padding-bottom: 10px">
+                        <label for="title" class="form-label">Название</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-label" id="title" th:field="*{title}">
+                        </div>
+                        <label for="description" class="form-label">Описание</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-label" id="description" th:field="*{description}">
+                        </div>
+                        <label for="price" class="form-label">Цена</label>
+                        <div class="mb-3">
+                            <input type="number" step="any" class="form-label" id="price" th:field="*{price}">
+                        </div>
+                        <label for="profile" class="form-label">Выберите пользователя</label>
+                        <div class="mb-3">
+                            <select class="form-select" id="profile" th:field="*{profile}">
+                                <option th:each="profile:${profiles}" th:value="${profile.id}">
+                                    [[${profile.getName}]]
+                                </option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary form-control">Добавить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

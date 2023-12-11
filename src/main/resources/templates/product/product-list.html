@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/fragments.html :: page-head"></head>
+<head th:insert="~{fragments/fragments.html :: page-head}"></head>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col" th:insert="fragments/fragments.html :: page-nav(page='profile')"></div>
-        <div class="col" th:each="product:${products}">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">[[${product.name}}]]</h5>
-                    <p class="card-text">[[${product.description}]]</p>
-                    <p class="card-text">[[${product.price}]]</p>
-                    <p class="card-text">[[${product.profile.name}]]</p>
-                    <a href="#" class="btn btn-primary">Купить</a>
+        <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='product')}"></div>
+        <div class="col-10">
+            <div class="row">
+                <div class="card w-25" th:each="product:${products}">
+                    <div class="card-body">
+                        <h5 class="card-title">[[${product.title}]]</h5>
+                        <p class="card-text">[[${product.description}]]</p>
+                        <p class="card-text">[[${product.price}]]</p>
+                        <p class="card-text">[[${product.profile.name}]]</p>
+                        <a href="#" class="btn btn-primary">Купить</a>
+                    </div>
                 </div>
             </div>
         </div>

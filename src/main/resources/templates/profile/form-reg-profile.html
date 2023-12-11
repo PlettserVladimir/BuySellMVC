@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/fragments.html :: page-head"></head>
+<head th:insert="~{fragments/fragments.html :: page-head}"></head>
 <body>
 <div class="row text-center" style="margin-top: 60px">
-    <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='add')}"></div>
+    <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='profileAdd')}"></div>
     <div class="col-10 container-fluid" style="background-color: #F2F3F4">
             <form method="post" th:action="@{/user-profile/add}" th:object="${profile}">
                 <h1>Добавление пользователя</h1>
@@ -25,7 +25,7 @@
                         <div class="mb-3">
                             <input type="number" step="any" class="form-label" id="wallet" th:field="*{wallet}">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-lg">Регистрация</button>
+                        <button type="submit" class="btn btn-primary btn-lg">Добавить</button>
                     </div>
                 </div>
             </form>

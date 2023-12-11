@@ -13,7 +13,7 @@ import org.top.BuySellMVC.service.ProfileService;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("user-profile")
+@RequestMapping("profile")
 public class ProfileController {
 
     private final ProfileService profileService;
@@ -39,8 +39,8 @@ public class ProfileController {
             model.addAttribute("profile",profile.get());
             return "profile/profile-details";
         }else {
-            redirectAttributes.addFlashAttribute(errorMessage,"Пользователь с ИД "+id+"не найден");
-            return "redirect:/user-profile";
+            redirectAttributes.addFlashAttribute(errorMessage,"Профиль с ИД "+id+"не найден");
+            return "redirect:/profile";
         }
     }
     //Удалить запись
@@ -49,11 +49,11 @@ public class ProfileController {
         Optional<Profile> deleted = profileService.deleteProfile(id);
         if (deleted.isPresent()){
             redirectAttributes.addFlashAttribute(successMessage,
-                    "Пользователь "+deleted.get().getName()+" успешно удален");
+                    "Профиль "+deleted.get().getName()+" успешно удален");
         }else {
-            redirectAttributes.addFlashAttribute(errorMessage,"Пользователь не найден");
+            redirectAttributes.addFlashAttribute(errorMessage,"Профиль не удален");
         }
-        return "redirect:/user-profile";
+        return "redirect:/profile";
     }
 
     //Добавить запись
@@ -68,11 +68,11 @@ public class ProfileController {
     public String postAddForm(Profile profile, RedirectAttributes redirectAttributes){
         Optional<Profile> saved = profileService.addProfile(profile);
         if (saved.isPresent()){
-            redirectAttributes.addFlashAttribute(successMessage,"Пользователь "+ profile.getName()+" создан");
+            redirectAttributes.addFlashAttribute(successMessage,"Профиль "+ profile.getName()+" создан");
         }else {
-            redirectAttributes.addFlashAttribute(errorMessage,"Пользователь "+ profile.getName()+" не создан");
+            redirectAttributes.addFlashAttribute(errorMessage,"Профиль "+ profile.getName()+" не создан");
         }
-        return "redirect:/user-profile/add";
+        return "redirect:/profile/add";
     }
 
 
@@ -86,7 +86,7 @@ public class ProfileController {
             return "profile/update-profile-form";
         }else {
             redirectAttributes.addFlashAttribute(errorMessage,"Пользователь не найден");
-            return "redirect:/user-profile";
+            return "redirect:/profile";
         }
     }
     @PostMapping("/update")
@@ -97,7 +97,7 @@ public class ProfileController {
         }else {
             redirectAttributes.addFlashAttribute(errorMessage,"Изменения не сохранены");
         }
-        return "redirect:/user-profile";
+        return "redirect:/profile";
     }
 
 }

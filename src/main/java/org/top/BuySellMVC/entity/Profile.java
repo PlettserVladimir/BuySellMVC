@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 
+//Содержит поля для хранения профиля пользователя
 @Entity
 @Table(name="profile_t")
 public class Profile {
@@ -28,7 +29,7 @@ public class Profile {
     private Double wallet;
 
     @OneToMany(mappedBy = "profile")
-    private Set<Product> productSet;
+    private Set<Announcement> announcements;
 
     public Profile(){
         id = 0;
@@ -40,12 +41,12 @@ public class Profile {
 
     }
 
-    public Set<Product> getProductSet() {
-        return productSet;
+    public Set<Announcement> getAdvertisements() {
+        return announcements;
     }
 
-    public void setProductSet(Set<Product> productSet) {
-        this.productSet = productSet;
+    public void setAdvertisements(Set<Announcement> announcements) {
+        this.announcements = announcements;
     }
 
     public String getEmail() {
