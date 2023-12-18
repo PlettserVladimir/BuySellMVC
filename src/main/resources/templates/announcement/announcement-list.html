@@ -1,10 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/fragments.html :: page-head}"></head>
 <body>
-
+<div class="container-fluid">
+    <th:block th:insert="~{fragments/fragments.html :: page-header}"></th:block>
+    <div class="row">
+        <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='announcement')}"></div>
+        <div class="col-10" style="background-color: #F2F3F4">
+            <div>
+                <nav class="nav">
+                    <a class="nav-link" th:href="@{/announcement}">Все</a>
+                    <a class="nav-link" aria-current="page" th:each="category:${categories}"
+                       th:href="@{'/announcement/filter/'+${category.id}}">[[${category.category}]]</a>
+                </nav>
+            </div>
+            <div class="row row-cols-1 row-cols-md-5 g-4">
+                <div class="col" th:each="announcement:${announcements}">
+                    <div class="card">
+                        <th:block th:if="${announcement.previewImageData != null}">
+                            <img class="card-img-top"
+                                 th:src="@{'data:image/jpeg;base64,' + ${announcement.previewImageData}}">
+                        </th:block>
+                        <div class="card-body">
+                            <h5 class="card-title">[[${announcement.title}]]</h5>
+                            <hr>
+                            <p class="card-text">[[${announcement.description}]]</p>
+                            <p class="card-text">[[${announcement.price}]].руб</p>
+                            <p class="card-text">[[${announcement.profile.name}]]</p>
+                            <p class="card-text">[[${announcement.category.category}]]</p>
+                            <a class="btn btn-primary" th:href="@{'/announcement/'+${announcement.id}}">Просмотр</a>
+                            <a href="#" class="btn btn-primary">Купить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

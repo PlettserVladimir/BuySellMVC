@@ -2,6 +2,7 @@ package org.top.BuySellMVC.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 //Сущность объявления
 @Entity
@@ -19,7 +20,7 @@ public class Announcement {
     @Column(name = "description_f")
     private String description;
     @Column(name = "data_creation_f")
-    private Date dataCreation;
+    private LocalDate dataCreation;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -29,6 +30,10 @@ public class Announcement {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
+    @Lob
+    @Column(name = "preview_image_f",columnDefinition = "MEDIUMBLOB")
+    private String previewImageData;
+
     public Announcement(){
         id = 0;
         title = "";
@@ -36,6 +41,14 @@ public class Announcement {
         description = "";
         category = null;
         profile = null;
+    }
+
+    public String getPreviewImageData() {
+        return previewImageData;
+    }
+
+    public void setPreviewImageData(String previewImageData) {
+        this.previewImageData = previewImageData;
     }
 
     public Integer getId() {
@@ -70,11 +83,11 @@ public class Announcement {
         this.description = description;
     }
 
-    public Date getDataCreation() {
+    public LocalDate getDataCreation() {
         return dataCreation;
     }
 
-    public void setDataCreation(Date dataCreation) {
+    public void setDataCreation(LocalDate dataCreation) {
         this.dataCreation = dataCreation;
     }
 
@@ -92,5 +105,18 @@ public class Announcement {
 
     public void setProfile(Profile profile) {
         this.profile = profile;
+    }
+
+    @Override
+    public String toString() {
+        return "Announcement{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", dataCreation=" + dataCreation +
+                ", category=" + category +
+                ", profile=" + profile +
+                '}';
     }
 }

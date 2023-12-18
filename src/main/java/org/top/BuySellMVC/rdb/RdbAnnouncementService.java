@@ -1,10 +1,14 @@
-package org.top.BuySellMVC.rdb.repository;
+package org.top.BuySellMVC.rdb;
 
 import org.springframework.stereotype.Service;
 import org.top.BuySellMVC.entity.Announcement;
+import org.top.BuySellMVC.rdb.repository.AnnouncementRepository;
 import org.top.BuySellMVC.service.AnnouncementService;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class RdbAnnouncementService implements AnnouncementService {
@@ -27,14 +31,14 @@ public class RdbAnnouncementService implements AnnouncementService {
     public Optional<Announcement> update(Announcement announcement) {
         Optional<Announcement> updated = findById(announcement.getId());
         if (updated.isPresent()){
-            announcementRepository.save(announcement);
-            return updated;
+           return Optional.of(announcementRepository.save(announcement));
         }
         return Optional.empty();
     }
 
     @Override
     public Optional<Announcement> addAnnouncement(Announcement announcement) {
+        announcement.setDataCreation(LocalDate.now());
         return Optional.of(announcementRepository.save(announcement));
     }
 
@@ -46,4 +50,15 @@ public class RdbAnnouncementService implements AnnouncementService {
         }
         return deleted;
     }
+
+    @Override
+    public List<Announcement> findByProfileId(Integer id) {
+        return announcementRepository.findAllByProfileId(id);
+    }
+
+    @Override
+    public List<Announcement> findByCategoryId(Integer id) {
+        return announcementRepository.findAllByCategoryId(id);
+    }
+
 }

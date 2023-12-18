@@ -8,12 +8,13 @@
 </head>
 <body>
 <div class="text-center">
-    <h1>Список пользователей</h1>
-    <p class="alert alert-success" th:if="${successMessage !=null}">[[${successMessage}]]</p>
-    <p class="alert alert-danger" th:if="${errorMessage !=null}">[[${dangerMessage}]]</p>
+    <th:block th:insert="~{fragments/fragments.html :: page-header}"></th:block>
     <div class="row">
         <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='profile')}"></div>
         <div class="col-10" style="background-color: #F2F3F4">
+            <h1>Список пользователей</h1>
+            <p class="alert alert-success" th:if="${successMessage !=null}">[[${successMessage}]]</p>
+            <p class="alert alert-danger" th:if="${errorMessage !=null}">[[${dangerMessage}]]</p>
             <table class="table table-bordered border-black" >
             <!-- шапка таблицы -->
                 <thead class="table-success border-black">
@@ -31,7 +32,7 @@
                     <tr th:each="profile:${profiles}">
                         <td style="background-color: #D0E7DE">[[${profile.id}]]</td>
                         <td>
-                            <a th:href="@{'/user-profile/'+${profile.id}}">[[${profile.name}]]</a>
+                            <a th:href="@{'/profile/'+${profile.id}}">[[${profile.name}]]</a>
                         </td>
                         <td>[[${profile.email}]]</td>
                         <td>[[${profile.rate}]]</td>

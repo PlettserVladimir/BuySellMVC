@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User profile list</title>
+    <!-- подключения локального bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="text-center">
+    <th:block th:insert="~{fragments/fragments.html :: page-header}"></th:block>
+    <div class="row">
+        <p class="alert alert-success" th:if="${successMessage !=null}">[[${successMessage}]]</p>
+        <p class="alert alert-danger" th:if="${errorMessage !=null}">[[${dangerMessage}]]</p>
+        <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='profile')}"></div>
+        <div class="col-10" style="background-color: #F2F3F4">
+            <h1>Список пользователей</h1>
+            <table class="table table-bordered border-black" >
+                <!-- шапка таблицы -->
+                <thead class="table-success border-black">
+                <tr>
+                    <th>ИД</th>
+                    <th>Название объявления</th>
+                    <th>Имя пользователя</th>
+                    <th>Категория</th>
+                    <th>Цена</th>
+                    <th>Дата регистрации</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="announcement:${announcements}">
+                    <td style="background-color: #D0E7DE">[[${announcement.id}]]</td>
+                    <td>
+                        <a th:href="@{'/announcement/'+${announcement.id}}">[[${announcement.title}]]</a>
+                    </td>
+                    <td>[[${announcement.profile.name}]]</td>
+                    <td>[[${announcement.category.category}]]</td>
+                    <td>[[${announcement.price}]]&#8381</td>
+                    <td>[[${announcement.dataCreation}]]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

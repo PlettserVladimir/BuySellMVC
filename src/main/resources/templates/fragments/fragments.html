@@ -27,21 +27,28 @@
     </p>
 </th:block>
 
-<!-- компонент шапки приложения -->
+<!-- компонент навигации приложения -->
 <th:block th:fragment="page-nav">
-    <div class="container-fluid align-items-start">
+    <div class="container-fluid align-items-start text-center">
         <div class="list-group" style="min-height: 100vh">
-            <a class="list-group-item list-group-item-action" th:href="@{/user-profile}" th:classappend="${page == 'profile'? 'active' : ''}">Список профилей</a>
-            <a class="list-group-item list-group-item-action" th:classappend="${page == 'profileAdd'? 'active' : ''}" th:href="@{/user-profile/add}" >
+            <a class="list-group-item list-group-item-action" th:href="@{/profile}" th:classappend="${page == 'profile'? 'active' : ''}">Список профилей</a>
+            <a class="list-group-item list-group-item-action" th:classappend="${page == 'profileAdd'? 'active' : ''}" th:href="@{/profile/add}" >
                 Добавить пользователя
             </a>
-            <a class="list-group-item list-group-item-action" th:href="@{/product}" th:classappend="${page == 'product'? 'active' : ''}">Список товаров</a>
-            <a class="list-group-item list-group-item-action" th:href="@{/product/add}" th:classappend="${page == 'productAdd'? 'active' : ''}">Добавить товар</a>
+            <a class="list-group-item list-group-item-action" th:href="@{/announcement}" th:classappend="${page == 'announcement'? 'active' : ''}">Список объявлений</a>
+            <a class="list-group-item list-group-item-action" th:href="@{/announcement/add}" th:classappend="${page == 'announcementAdd'? 'active' : ''}">Добавить объявление</a>
             <a class="list-group-item list-group-item-action disabled">A disabled link item</a>
         </div>
     </div>
 </th:block>
-
+<!-- компонент шапки приложения -->
+<th:block th:fragment="page-header">
+    <nav class="navbar mb-1">
+        <div class="container-fluid row text-center">
+            <a class="navbar-brand" th:href="@{/announcement}"><b>Buy/Sell</b></a>
+        </div>
+    </nav>
+</th:block>
 
 </body>
 </html>

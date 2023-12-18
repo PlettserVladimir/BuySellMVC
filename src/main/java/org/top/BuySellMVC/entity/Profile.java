@@ -31,6 +31,9 @@ public class Profile {
     @OneToMany(mappedBy = "profile")
     private Set<Announcement> announcements;
 
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private User user;
+
     public Profile(){
         id = 0;
         name = "";
@@ -39,6 +42,22 @@ public class Profile {
         rate = 0.0;
         wallet = 0.00;
 
+    }
+
+    public Set<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(Set<Announcement> announcements) {
+        this.announcements = announcements;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Set<Announcement> getAdvertisements() {
