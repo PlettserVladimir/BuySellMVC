@@ -10,32 +10,32 @@ import java.util.Optional;
 
 @Service
 public class RdbProfileService implements ProfileService {
-    private final ProfileRepository repository;
+    private final ProfileRepository profileRepository;
 
-    public RdbProfileService(ProfileRepository repository){
-        this.repository = repository;
+    public RdbProfileService(ProfileRepository profileRepository){
+        this.profileRepository = profileRepository;
     }
 
     @Override
     public Iterable<Profile> findAll() {
-        return repository.findAll();
+        return profileRepository.findAll();
     }
 
     @Override
     public Optional<Profile> findById(Integer id) {
-        return repository.findById(id);
+        return profileRepository.findById(id);
     }
 
     @Override
     public Optional<Profile> findByName(String name) {
-        return repository.findByName(name);
+        return profileRepository.findByName(name);
     }
 
     @Override
     public Optional<Profile> deleteProfile(Integer id) {
         Optional<Profile> deleted = findById(id);
         if (deleted.isPresent()){
-           repository.deleteById(id);
+           profileRepository.deleteById(id);
         }
         return deleted;
     }
@@ -44,7 +44,7 @@ public class RdbProfileService implements ProfileService {
     public Optional<Profile> updateProfile(Profile profile) {
         Optional<Profile> updated = findById(profile.getId());
         if (updated.isPresent()){
-            updated = Optional.of(repository.save(profile));
+            updated = Optional.of(profileRepository.save(profile));
         }
         return updated;
     }
@@ -53,9 +53,18 @@ public class RdbProfileService implements ProfileService {
     public Optional<Profile> addProfile(Profile profile) {
         Optional<Profile> added = findByName(profile.getName());
         if (added.isEmpty()){
-            added = Optional.of(repository.save(profile));
+            added = Optional.of(profileRepository.save(profile));
             return added;
         }
         return Optional.empty();
+    }
+    @Override
+    public boolean replenishmentOfBalance(Profile profile,Integer summa){
+        if (profileRepository.findById(profile.getId()).isPresent()) {
+            profile.setWallet(profile.getWallet() + summa);
+            profileRepository.save(profile);
+            return true;
+        }
+        return false;
     }
 }

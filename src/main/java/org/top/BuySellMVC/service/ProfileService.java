@@ -19,4 +19,6 @@ public interface ProfileService {
     Optional<Profile> updateProfile(Profile profile);
     //добавить запись
     Optional<Profile> addProfile(Profile profile);
+    //пополнение кошелька
+    boolean replenishmentOfBalance(Profile profile,Integer summa);
 }

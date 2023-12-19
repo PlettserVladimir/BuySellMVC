@@ -8,15 +8,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.BuySellMVC.entity.Announcement;
 import org.top.BuySellMVC.entity.Category;
 import org.top.BuySellMVC.entity.Profile;
+import org.top.BuySellMVC.entity.User;
 import org.top.BuySellMVC.service.AnnouncementService;
 import org.top.BuySellMVC.service.CategoryService;
 import org.top.BuySellMVC.service.ProfileService;
+import org.top.BuySellMVC.service.UserService;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.security.Principal;
+import java.util.*;
 
 @Controller
 @RequestMapping("announcement")
@@ -24,24 +24,35 @@ public class AnnouncementController {
     private final AnnouncementService announcementService;
     private final CategoryService categoryService;
     private final ProfileService profileService;
+    private final UserService userService;
     public AnnouncementController(AnnouncementService announcementService, CategoryService categoryService,
-                                  ProfileService profileService){
+                                  ProfileService profileService, UserService userService){
         this.announcementService = announcementService;
         this.categoryService = categoryService;
         this.profileService = profileService;
+        this.userService = userService;
+    }
+
+    private void findProfileByLogin(Principal principal,Model model){
+        Optional<User> user = userService.findUserByLogin(principal.getName());
+        Profile profile = user.get().getProfile();
+        model.addAttribute("profile", profile);
     }
 
     @GetMapping("")
-    public String getAll(Model model){
+    public String getAll(Model model, Principal principal){
+        findProfileByLogin(principal,model);
         Iterable<Announcement> getAll = announcementService.findAll();
         Iterable<Category> categories = categoryService.findAll();
         model.addAttribute("announcements",getAll);
         model.addAttribute("categories",categories);
+
         return "announcement/announcement-list";
     }
 
     @GetMapping("/{id}")
-    public String getId(@PathVariable Integer id, Model model, RedirectAttributes ra){
+    public String getId(@PathVariable Integer id, Model model, RedirectAttributes ra,Principal principal){
+        findProfileByLogin(principal,model);
         Optional<Announcement> announcement = announcementService.findById(id);
         if (announcement.isPresent()){
             model.addAttribute("announcement",announcement.get());
@@ -52,13 +63,17 @@ public class AnnouncementController {
         }
     }
     @GetMapping("add")
-    public String getAddForm(Model model){
+    public String getAddForm(Model model, Principal principal){
+        Optional<User> user = userService.findUserByLogin(principal.getName());
+        Profile profileUser = user.get().getProfile();
         Announcement announcement = new Announcement();
+        announcement.setProfile(profileUser);
         Iterable<Category> categories = categoryService.findAll();
-        Iterable<Profile> profiles = profileService.findAll();
+//        Iterable<Profile> profiles = profileService.findAll();
         model.addAttribute("announcement",announcement);
         model.addAttribute("categories",categories);
-        model.addAttribute("profiles",profiles);
+        model.addAttribute("profile", profileUser);
+//        model.addAttribute("profileUser",profileUser);
         return "announcement/form-add-announcement";
     }
     @PostMapping("add")
@@ -86,10 +101,11 @@ public class AnnouncementController {
         return "redirect:/announcement";
     }
     @GetMapping("/update/{id}")
-    public String getUpdatedForm(@PathVariable Integer id,Model model,RedirectAttributes ra){
+    public String getUpdatedForm(@PathVariable Integer id,Model model,RedirectAttributes ra,Principal principal){
         Optional<Announcement> updated = announcementService.findById(id);
         Iterable<Category> categories = categoryService.findAll();
         if (updated.isPresent()){
+            findProfileByLogin(principal,model);
             model.addAttribute("announcement",updated.get());
             model.addAttribute("categories",categories);
             return "announcement/update-announcement-form";
@@ -111,17 +127,30 @@ public class AnnouncementController {
         return "redirect:/announcement";
     }
     @GetMapping("/profile/{id}")
-    public String getAllAnnouncementProfile(@PathVariable Integer id, Model model){
+    public String getAllAnnouncementProfile(@PathVariable Integer id, Model model,Principal principal){
+        findProfileByLogin(principal,model);
         List<Announcement> announcements = announcementService.findByProfileId(id);
         model.addAttribute("announcements",announcements);
         return "announcement/announcement-profile-list";
     }
     @GetMapping("/filter/{id}")
-    public String getAllAnnouncementByCategoryId(@PathVariable Integer id,Model model){
+    public String getAllAnnouncementByCategoryId(@PathVariable Integer id,Model model,Principal principal){
+        findProfileByLogin(principal,model);
         Iterable<Category> categories = categoryService.findAll();
         List<Announcement> announcements = announcementService.findByCategoryId(id);
         model.addAttribute("categories",categories);
         model.addAttribute("announcements",announcements);
         return "announcement/announcement-list";
+    }
+
+    @GetMapping("buy/{idAnnouncement}")
+    public String buy(@PathVariable Integer idAnnouncement, Principal principal){
+        Optional<User> user = userService.findUserByLogin(principal.getName());
+        Profile profileUser = user.get().getProfile();
+        Announcement announcement = announcementService.findById(idAnnouncement).get();
+        if (announcementService.buy(profileUser,announcement)){
+            return "redirect:/announcement";
+        }
+        return "redirect:announcement/announcement-details";
     }
 }

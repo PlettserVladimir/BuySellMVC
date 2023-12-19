@@ -2,6 +2,7 @@ package org.top.BuySellMVC.service;
 
 import org.springframework.stereotype.Service;
 import org.top.BuySellMVC.entity.Announcement;
+import org.top.BuySellMVC.entity.Profile;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,4 +25,6 @@ public interface AnnouncementService {
     List<Announcement> findByProfileId(Integer id);
     //7. Получение по ИД категории
     List<Announcement> findByCategoryId(Integer id);
+    //8. покупка
+    boolean buy(Profile profile, Announcement announcement);
 }

@@ -4,10 +4,20 @@ public class UserRegistrationsForm {
 
     private String name;
     private String email;
-    private String userName;
+    private String login;
     private String password;
 
+    private String role;
+
     public UserRegistrationsForm(){
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getName() {
@@ -26,12 +36,12 @@ public class UserRegistrationsForm {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {

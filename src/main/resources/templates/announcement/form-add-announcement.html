@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:insert="~{fragments/fragments.html :: page-head}"></head>
 <body>
 <div class="container-fluid">
@@ -39,14 +39,9 @@
                                 </option>
                             </select>
                         </div>
-                        <label for="profile" class="form-label">Выберите пользователя</label>
-                        <div class="mb-3">
-                            <select class="form-select" id="profile" th:field="*{profile}">
-                                <option th:each="profile:${profiles}" th:value="${profile.id}">
-                                    [[${profile.getName}]]
-                                </option>
-                            </select>
-                        </div>
+                        <input class="form-control" type="text" id="profile" th:field="*{profile}" hidden="hidden">
+
+
                         <button class="btn btn-primary form-control w-25">Добавить</button>
                     </div>
                 </div>

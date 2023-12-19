@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:insert="~{fragments/fragments.html :: page-head}"></head>
 <body>
+<th:block th:replace="~{fragments/fragments.html :: page-header}"/>
 <div class="container-fluid">
-    <th:block th:insert="~{fragments/fragments.html :: page-header}"></th:block>
     <div class="row">
         <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='announcement')}"></div>
         <div class="col-10" style="background-color: #F2F3F4">
@@ -29,7 +29,7 @@
                             <p class="card-text">[[${announcement.profile.name}]]</p>
                             <p class="card-text">[[${announcement.category.category}]]</p>
                             <a class="btn btn-primary" th:href="@{'/announcement/'+${announcement.id}}">Просмотр</a>
-                            <a href="#" class="btn btn-primary">Купить</a>
+                            <a th:href="@{'announcement/buy/'+${announcement.id}}" class="btn btn-primary">Купить</a>
                         </div>
                     </div>
                 </div>

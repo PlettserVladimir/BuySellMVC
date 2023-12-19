@@ -6,22 +6,34 @@ import jakarta.persistence.*;
 @Table(name = "user_t")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name_f")
-    private String userName;
+    private String login;
 
     @Column(name = "password_f")
     private String password;
 
+    @Column(name = "role_f")
+    private String role;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @MapsId
     private Profile profile;
 
     public User(){
         id = 0;
-        userName = "";
+        login = "";
         password = "";
+        role = "";
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public Integer getId() {
@@ -32,12 +44,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserName(String name) {
-        this.userName = name;
+    public void setLogin(String name) {
+        this.login = name;
     }
 
     public String getPassword() {

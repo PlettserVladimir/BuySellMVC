@@ -7,12 +7,12 @@
 </head>
 <body>
 <section class="vh-100" style="background-color: #2779e2;">
-    <form method="post" th:object="userRegistrationForm" th:action="@{/user/register}">
+    <form method="post" th:object="${userRegistrationsForm}" th:action="@{/user/register}">
         <div class="container h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-9">
 
-                    <h1 class="text-white mb-4">Регистрация</h1>
+                    <h1 class="text-white mb-4 text-center">Регистрация</h1>
 
                     <div class="card" style="border-radius: 15px;">
                         <div class="card-body">
@@ -44,7 +44,7 @@
                                     <h6 class="mb-0">Login</h6>
                                 </div>
                                 <div class="col-md-9 pe-5">
-                                    <input type="text" class="form-control form-control-lg" th:field="*{userName}"/>
+                                    <input type="text" class="form-control form-control-lg" th:field="*{login}"/>
                                 </div>
                             </div>
 
@@ -59,8 +59,9 @@
                                 </div>
                             </div>
                             <hr class="mx-n3">
-                            <div class="px-5 py-4">
+                            <div class="px-5 py-4 text-center">
                                 <button type="submit" class="btn btn-primary btn-lg">Регистрация</button>
+                                <a class="btn btn-primary btn-lg" th:href="@{/}">Отмена</a>
                             </div>
                         </div>
                     </div>

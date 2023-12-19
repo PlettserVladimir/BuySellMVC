@@ -25,7 +25,7 @@
             <h3><b>Категория:</b></h3>
             <p class="card-text">[[${announcement.category.category}]]</p>
             <a th:href="@{'/announcement/update/'+${announcement.id}}" class="btn btn-primary">Редактировать</a>
-            <a href="#" class="btn btn-primary">Купить</a>
+            <a th:href="@{'/announcement/buy/'+${announcement.id}}" class="btn btn-primary">Купить</a>
         </div>
     </div>
 </div>
