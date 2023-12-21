@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование объявления</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<th:block th:insert="~{fragments/fragments.html :: page-header}"></th:block>
+<!-- верстка с использованием bootstrap -->
+<div class="container-fluid text-center">
+    <div class="container-sm align-content-center text-center">
+        <h1>Редактирование объявления</h1>
+        <form method="post" th:action="@{/announcement/update}" th:object="${announcement}" enctype="multipart/form-data">
+            <!-- id -->
+                <input class="form-control" type="number" id="id" th:field="*{id}" hidden="hidden"/>
+
+            <!-- Название объявления -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="title">Название объявления: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="title" required minlength="1" th:field="*{title}"/>
+                </div>
+            </div>
+
+            <!--Описание -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="description">Описание: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="description" required minlength="1"
+                           th:field="*{description}"/>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="previewImage">Фото: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="file" id="previewImage" name="previewImage" th:value="${announcement.getPreviewImageData()}"/>
+                </div>
+            </div>
+
+            <!-- Категории -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="category">Категории: </label>
+                <div class="col-10">
+                    <select class="form-select" id="category" th:field="*{category}">
+                        <option th:each="category:${categories}" th:value="${category.id}">
+                            [[${category.category}]]
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <!-- Цена -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="price">Цена: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="price" required minlength="1" th:field="*{price}"/>
+                </div>
+            </div>
+
+
+            <!-- Дата регистрации -->
+            <input class="form-control" type="text" id="date" th:field="*{dataCreation}" hidden="hidden"/>
+
+            <!-- Профиль (пример со скрытым полем) -->
+            <input class="form-control" type="text" id="profile" th:field="*{profile}" hidden="hidden">
+
+
+            <!-- кнопка отправки формы -->
+            <div class="mb-3 row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5">
+                    <button class="btn btn-success form-control">Сохранить</button>
+                </div>
+                <div class="col-sm-5">
+                    <a class="btn btn-danger form-control" th:href="@{/announcement}">Отменить</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

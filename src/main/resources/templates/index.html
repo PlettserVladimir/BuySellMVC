@@ -6,9 +6,20 @@
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 </head>
 <body>
-<h3 class="text-center">Добро пожаловать в приложение Buy/Sell</h3>
-<a class="btn-info" th:href="@{/user-profile/add}">Добавить пользователя</a>
-<br>
-<a class="btn-info" th:href="@{/user-profile}">Список профилей</a>
+<nav class="navbar mb-1">
+    <div class="container-fluid row text-center">
+        <a class="navbar-brand" th:href="@{/}"><b>Buy/Sell</b></a>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2">
+            <th:block th:replace="~{fragments/fragments.html :: page-nav}"></th:block>
+        </div>
+        <div class="col-10" style="background-color: #F2F3F4">
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buy-Sell</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5">
+                <div class="card-body p-4 p-sm-5">
+                    <h5 class="card-title text-center mb-5 fw-light fs-5">Пополнение баланса</h5>
+                    <th:block th:replace="~{fragments/fragments.html :: page-message}"/>
+                    <form method="post" th:action="@{/profile/replenishment}">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" name="summa">
+                            <label for="floatingInput">Введите сумму</label>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary btn-login fw-bold" type="submit">Пополнить
+                            </button>
+                            <a class="btn btn-warning fw-bold mt-1" th:href="@{/announcement}">Отмена</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

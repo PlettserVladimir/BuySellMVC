@@ -3,10 +3,12 @@ package org.top.BuySellMVC.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+//Содержит поля для хранения профиля пользователя
 @Entity
-@Table(name="user_profile_t")
-public class UserProfile {
+@Table(name="profile_t")
+public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -26,7 +28,13 @@ public class UserProfile {
     @Column(name = "wallet_t",nullable = false)
     private Double wallet;
 
-    public UserProfile(){
+    @OneToMany(mappedBy = "profile")
+    private Set<Announcement> announcements;
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private User user;
+
+    public Profile(){
         id = 0;
         name = "";
         email = "";
@@ -34,6 +42,30 @@ public class UserProfile {
         rate = 0.0;
         wallet = 0.00;
 
+    }
+
+    public Set<Announcement> getAnnouncements() {
+        return announcements;
+    }
+
+    public void setAnnouncements(Set<Announcement> announcements) {
+        this.announcements = announcements;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Set<Announcement> getAdvertisements() {
+        return announcements;
+    }
+
+    public void setAdvertisements(Set<Announcement> announcements) {
+        this.announcements = announcements;
     }
 
     public String getEmail() {

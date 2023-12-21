@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:insert="~{fragments/fragments.html :: page-head}"></head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <th:block th:insert="~{fragments/fragments.html :: page-header}"></th:block>
+        <div class="col-2" th:insert="~{fragments/fragments.html :: page-nav(page='announcementAdd')}"></div>
+        <div class="col-10" style="background-color: #F2F3F4">
+            <form method="post" th:action="@{/announcement/add}" th:object="${announcement}" enctype="multipart/form-data">
+                <th:block th:replace="fragments/fragments.html :: page-message"/>
+                <h1 class="text-center">Добавить объявление</h1>
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="card w-50 container-fluid" style="border-radius: 15px;padding: 15px">
+                        <label for="title" class="form-label">Название:</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-label" id="title" th:field="*{title}">
+                        </div>
+
+                        <label for="description" class="form-label">Описание:</label>
+                        <div class="mb-3">
+                            <input type="text" class="form-label" id="description" th:field="*{description}">
+                        </div>
+
+                        <label for="image" class="form-label">Фото:</label>
+                        <div class="mb-3">
+                            <input type="file" class="form-label" name="previewImage" id="image">
+                        </div>
+
+                        <label for="price" class="form-label">Цена(.руб):</label>
+                        <div class="mb-3">
+                            <input type="number" step="any" class="col-form-label" id="price" th:field="*{price}">
+                        </div>
+                        <label for="category" class="form-label">Категории</label>
+                        <div class="mb-3">
+                            <select class="form-select" id="category" th:field="*{category}">
+                                <option th:each="category:${categories}" th:value="${category.id}">
+                                    [[${category.category}]]
+                                </option>
+                            </select>
+                        </div>
+                        <input class="form-control" type="text" id="profile" th:field="*{profile}" hidden="hidden">
+
+
+                        <button class="btn btn-primary form-control w-25">Добавить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
