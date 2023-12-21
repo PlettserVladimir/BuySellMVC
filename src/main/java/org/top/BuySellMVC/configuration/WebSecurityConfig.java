@@ -34,11 +34,10 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/announcement/*").permitAll()
+                        .requestMatchers("/announcement/all").permitAll()
                         .requestMatchers("/", "/user/register", "webjars/**").permitAll()
                         .requestMatchers(
                                 "/profile/add",
-                                "/*/delete/*",
                                 "/profile/update",
                                 "/profile/update/*")
                         .hasAnyRole("ADMIN")
@@ -65,7 +64,6 @@ public class WebSecurityConfig {
     }
     @Bean
     public UserDetailsManager users(HttpSecurity http) throws Exception {
-        // TODO: remove deprecated calls
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(userDetailsService())
                 .passwordEncoder(passwordEncoder())

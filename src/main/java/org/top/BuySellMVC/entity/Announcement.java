@@ -34,6 +34,9 @@ public class Announcement {
     @Column(name = "preview_image_f",columnDefinition = "MEDIUMBLOB")
     private String previewImageData;
 
+    @Column(name = "status_f")
+    private String status;
+
     public Announcement(){
         id = 0;
         title = "";
@@ -41,6 +44,14 @@ public class Announcement {
         description = "";
         category = null;
         profile = null;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getPreviewImageData() {

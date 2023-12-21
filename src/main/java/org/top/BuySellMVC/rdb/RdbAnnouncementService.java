@@ -42,6 +42,7 @@ public class RdbAnnouncementService implements AnnouncementService {
     @Override
     public Optional<Announcement> addAnnouncement(Announcement announcement) {
         announcement.setDataCreation(LocalDate.now());
+        announcement.setStatus("Активно");
         return Optional.of(announcementRepository.save(announcement));
     }
 
@@ -68,7 +69,8 @@ public class RdbAnnouncementService implements AnnouncementService {
         if (profile.getWallet()> announcement.getPrice()){
             profile.setWallet(profile.getWallet()- announcement.getPrice());
             profileService.updateProfile(profile);
-            delete(announcement.getId());
+            announcement.setStatus("Продано");
+            announcementRepository.save(announcement);
             return true;
         }
         return false;

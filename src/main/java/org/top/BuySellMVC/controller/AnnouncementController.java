@@ -11,7 +11,6 @@ import org.top.BuySellMVC.entity.Profile;
 import org.top.BuySellMVC.entity.User;
 import org.top.BuySellMVC.service.AnnouncementService;
 import org.top.BuySellMVC.service.CategoryService;
-import org.top.BuySellMVC.service.ProfileService;
 import org.top.BuySellMVC.service.UserService;
 
 import java.io.IOException;
@@ -23,20 +22,30 @@ import java.util.*;
 public class AnnouncementController {
     private final AnnouncementService announcementService;
     private final CategoryService categoryService;
-    private final ProfileService profileService;
     private final UserService userService;
     public AnnouncementController(AnnouncementService announcementService, CategoryService categoryService,
-                                  ProfileService profileService, UserService userService){
+                                  UserService userService){
         this.announcementService = announcementService;
         this.categoryService = categoryService;
-        this.profileService = profileService;
         this.userService = userService;
     }
 
     private void findProfileByLogin(Principal principal,Model model){
-        Optional<User> user = userService.findUserByLogin(principal.getName());
-        Profile profile = user.get().getProfile();
-        model.addAttribute("profile", profile);
+        if (principal !=null) {
+            Optional<User> user = userService.findUserByLogin(principal.getName());
+            if (user.isPresent()) {
+                Profile profile = user.get().getProfile();
+                model.addAttribute("autProfile", profile);
+            }
+        }
+    }
+    @GetMapping("all")
+    public String all(Model model){
+        Iterable<Announcement> getAll = announcementService.findAll();
+        Iterable<Category> categories = categoryService.findAll();
+        model.addAttribute("announcements",getAll);
+        model.addAttribute("categories",categories);
+        return "announcement/announcement-list";
     }
 
     @GetMapping("")
@@ -69,11 +78,9 @@ public class AnnouncementController {
         Announcement announcement = new Announcement();
         announcement.setProfile(profileUser);
         Iterable<Category> categories = categoryService.findAll();
-//        Iterable<Profile> profiles = profileService.findAll();
         model.addAttribute("announcement",announcement);
         model.addAttribute("categories",categories);
-        model.addAttribute("profile", profileUser);
-//        model.addAttribute("profileUser",profileUser);
+        model.addAttribute("autProfile", profileUser);
         return "announcement/form-add-announcement";
     }
     @PostMapping("add")
@@ -98,7 +105,7 @@ public class AnnouncementController {
         }else {
             ra.addFlashAttribute(Message.errorMessage,"Объявление не удалено");
         }
-        return "redirect:/announcement";
+        return "redirect:/announcement/profile/"+deleted.get().getProfile().getId();
     }
     @GetMapping("/update/{id}")
     public String getUpdatedForm(@PathVariable Integer id,Model model,RedirectAttributes ra,Principal principal){
@@ -116,15 +123,20 @@ public class AnnouncementController {
     }
     @PostMapping("/update")
     public String postUpdateForm(Announcement announcement,RedirectAttributes ra,@RequestParam MultipartFile previewImage) throws IOException {
-        String previewImageData = Base64.getEncoder().encodeToString(previewImage.getBytes());
-        announcement.setPreviewImageData(previewImageData);
+        if (previewImage.getSize()>0) {
+            String previewImageData = Base64.getEncoder().encodeToString(previewImage.getBytes());
+            announcement.setPreviewImageData(previewImageData);
+        }else {
+            Optional<Announcement> updated = announcementService.findById(announcement.getId());
+            announcement.setPreviewImageData(updated.get().getPreviewImageData());
+        }
         Optional<Announcement> update = announcementService.update(announcement);
         if (update.isPresent()){
             ra.addFlashAttribute(Message.successMessage,"Объявление успешно изменено");
         }else {
             ra.addFlashAttribute(Message.errorMessage,"Ошибка. Объявление не изменено");
         }
-        return "redirect:/announcement";
+        return "redirect:/announcement/"+announcement.getId();
     }
     @GetMapping("/profile/{id}")
     public String getAllAnnouncementProfile(@PathVariable Integer id, Model model,Principal principal){
@@ -144,13 +156,18 @@ public class AnnouncementController {
     }
 
     @GetMapping("buy/{idAnnouncement}")
-    public String buy(@PathVariable Integer idAnnouncement, Principal principal){
+    public String buy(@PathVariable Integer idAnnouncement, Principal principal, RedirectAttributes ra){
         Optional<User> user = userService.findUserByLogin(principal.getName());
         Profile profileUser = user.get().getProfile();
         Announcement announcement = announcementService.findById(idAnnouncement).get();
-        if (announcementService.buy(profileUser,announcement)){
-            return "redirect:/announcement";
+        boolean isBuy = announcementService.buy(profileUser,announcement);
+        System.out.println(isBuy);
+        if (isBuy){
+            ra.addFlashAttribute(Message.successMessage,"Успешно");
+        }else {
+            System.out.println(isBuy);
+            ra.addFlashAttribute(Message.errorMessage,"Недостаточно средств");
         }
-        return "redirect:announcement/announcement-details";
+        return "redirect:/announcement/" + idAnnouncement;
     }
 }

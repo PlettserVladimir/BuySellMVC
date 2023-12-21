@@ -32,9 +32,6 @@ public class RdbUserService implements UserService {
         Profile profile = new Profile();
         profile.setName(userRegistrationsForm.getName());
         profile.setEmail(userRegistrationsForm.getEmail());
-        profile.setRate(0.0);
-        profile.setRegistrationDate(LocalDate.now());
-        profile.setWallet(0.0);
         User user = new User();
         user.setLogin(userRegistrationsForm.getLogin());
         user.setPassword(passwordEncoder.encode(userRegistrationsForm.getPassword()));

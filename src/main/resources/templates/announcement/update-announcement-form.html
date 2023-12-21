@@ -35,7 +35,7 @@
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label" for="previewImage">Фото: </label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="file" id="previewImage" name="previewImage"/>
+                    <input class="form-control" type="file" id="previewImage" name="previewImage" th:value="${announcement.getPreviewImageData()}"/>
                 </div>
             </div>
 

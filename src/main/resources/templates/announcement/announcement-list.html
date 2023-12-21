@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:insert="~{fragments/fragments.html :: page-head}"></head>
 <body>
 <th:block th:replace="~{fragments/fragments.html :: page-header}"/>
@@ -15,9 +15,9 @@
                 </nav>
             </div>
             <div class="row row-cols-1 row-cols-md-5 g-4">
-                <div class="col" th:each="announcement:${announcements}">
+                <div class="col" th:each="announcement:${announcements}" th:if="${announcement.status == 'Активно'}">
                     <div class="card">
-                        <th:block th:if="${announcement.previewImageData != null}">
+                        <th:block th:if="${announcement.previewImageData != ''}">
                             <img class="card-img-top"
                                  th:src="@{'data:image/jpeg;base64,' + ${announcement.previewImageData}}">
                         </th:block>
@@ -29,7 +29,7 @@
                             <p class="card-text">[[${announcement.profile.name}]]</p>
                             <p class="card-text">[[${announcement.category.category}]]</p>
                             <a class="btn btn-primary" th:href="@{'/announcement/'+${announcement.id}}">Просмотр</a>
-                            <a th:href="@{'announcement/buy/'+${announcement.id}}" class="btn btn-primary">Купить</a>
+<!--                            <a sec:authorize="hasRole('USER')" th:href="@{'announcement/buy/'+${announcement.id}}" class="btn btn-primary">Купить</a>-->
                         </div>
                     </div>
                 </div>
